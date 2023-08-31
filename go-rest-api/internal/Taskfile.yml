@@ -22,17 +22,16 @@ tasks:
     - GOFLAGS=-mod=mod go run internal/main.go
 
   swagger.gen:
-    decs: Generate Go code
+    desc: Generate Go code
     cmds:
     - GOFLAGS=-mod=mod go generate github.com/scraly/learning-go-by-examples/go-rest-api/internal github.com/scraly/learning-go-by-examples/go-rest-api/pkg/swagger
 
   swagger.validate:
-    decs: Validate swagger
+    desc: Validate swagger
     cmds:
   - swagger validate pkg/swagger/swagger.yml
 
   swagger.doc:
-    decs: DOc for swagger
+    desc: Doc for swagger
     cmds:
     - docker run -i yousan/swagger-yaml-to-html < pkg/swagger/swagger.yml > doc/index.html
-    
