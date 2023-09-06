@@ -1,35 +1,31 @@
 version: '3'
 
-vars:
-  GREETING: Greetings Fellow Human!
-
+  vars:
+  .GREETING: Greetings Fellow Human!
 tasks:
-  default:
+  greeting:
     cmds:
       - echo "{{.GREETING}}"
     silent: true
-
   build:
     desc: Build the app
     cmds:
       - GOFLAGS=-mod=mod go build -o bin/go-rest-api internal/main.go
-
   Run:
     desc: Run the app
     cmds:
       - GOFLAGS=-mod=mod go run internal/main.go
-
   swagger.gen:
     desc: Generate Go code
     cmds:
+    # Use "del" for Windows and "rm" for Unix-like systems
+      - del /q /f generated\* 2>nul
       - GOFLAGS=-mod=mod go generate github.com/scraly/learning-go-by-examples/go-rest-api/internal github.com/scraly/learning-go-by-examples/go-rest-api/pkg/swagger
-
   swagger.validate:
     desc: Validate swagger
     cmds:
-      - swagger validate pkg/swagger/swagger.yml
-
+      - task swagger.validate pkg/swagger/Swagger.yml
   swagger.doc:
     desc: Doc for swagger
     cmds:
-      - docker run -i yousan/swagger-yaml-to-html < pkg/swagger/swagger.yml > doc/index.html
+      - docker run -i yousan/swagger-yaml-to-html < pkg/swagger/Swagger.yml > doc/index.html
